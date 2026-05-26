@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Citas Médicas - Clínica Dental</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #f0f2f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background-color: #2ecc71;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .completada { background: #d4edda; color: #155724; }
+        .cancelada { background: #f8d7da; color: #721c24; }
+        .programada { background: #fff3cd; color: #856404; }
+        .re-programada { background: #d1ecf1; color: #0c5460; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Registro de Citas</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID Cita</th>
+                <th>Paciente</th>
+                <th>Doctor</th>
+                <th>Fecha / Hora</th>
+                <th>Motivo</th>
+                <th>Estado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>CITA-101</td>
+                <td>Juan Pérez García</td>
+                <td>Dr. Arrieta</td>
+                <td>15/Marzo - 10:00 AM</td>
+                <td>Extracción de muela</td>
+                <td><span class="status completada">Completada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-102</td>
+                <td>María Elena Rodríguez</td>
+                <td>Dra. Sánchez</td>
+                <td>15/Marzo - 11:30 AM</td>
+                <td>Limpieza rutina</td>
+                <td><span class="status completada">Completada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-103</td>
+                <td>Carlos Slim Helú Jr.</td>
+                <td>Dra. Sánchez</td>
+                <td>16/Marzo - 09:00 AM</td>
+                <td>Revisión sensibilidad</td>
+                <td><span class="status cancelada">Cancelada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-104</td>
+                <td>Ana Karenina Silva</td>
+                <td>Dr. Arrieta</td>
+                <td>16/Marzo - 04:00 PM</td>
+                <td>Aplicación de resina</td>
+                <td><span class="status programada">Programada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-105</td>
+                <td>Roberto Gómez Bolaños</td>
+                <td>Dra. Luna</td>
+                <td>17/Marzo - 12:00 PM</td>
+                <td>Ajuste de brackets</td>
+                <td><span class="status programada">Programada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-106</td>
+                <td>Laura Pausini Cantú</td>
+                <td>Dra. Sánchez</td>
+                <td>17/Marzo - 05:00 PM</td>
+                <td>Blanqueamiento</td>
+                <td><span class="status programada">Programada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-107</td>
+                <td>Diego Armando Maradona</td>
+                <td>Dr. Arrieta</td>
+                <td>18/Marzo - 08:00 AM</td>
+                <td>Urgencia dolor</td>
+                <td><span class="status completada">Completada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-108</td>
+                <td>Sofía Vergara Ortiz</td>
+                <td>Dra. Luna</td>
+                <td>19/Marzo - 11:00 AM</td>
+                <td>Consulta inicial</td>
+                <td><span class="status programada">Programada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-109</td>
+                <td>Luis Miguel Gallego</td>
+                <td>Dra. Sánchez</td>
+                <td>20/Marzo - 10:00 AM</td>
+                <td>Diseño de sonrisa</td>
+                <td><span class="status re-programada">Re-programada</span></td>
+            </tr>
+            <tr>
+                <td>CITA-110</td>
+                <td>Ximena Sariñana</td>
+                <td>Dra. Sánchez</td>
+                <td>21/Marzo - 01:00 PM</td>
+                <td>Limpieza y flúor</td>
+                <td><span class="status programada">Programada</span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

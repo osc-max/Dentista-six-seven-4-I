@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<title>Dentista Six Seven</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+  }
+
+  header {
+    background-color: #03abcf;
+    padding: 20px;
+    color: white;
+  }
+
+  .header-content {
+    display: flex;         
+    align-items: center;   
+    justify-content: center; 
+    gap: 20px;            
+  }
+
+  .dentista-header {
+    height: 70px !important;  
+    width: auto;
+    border-radius: 8px;    
+    object-fit: contain;
+  }
+
+  header h2 {
+    margin: 0;
+    font-size: 35px;
+  }
+
+  nav {
+    float: left;
+    width: 30%;
+    min-height: 350px; 
+    background: #cff0fc;
+    padding: 20px;
+  }
+
+  nav ul {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  nav ul li {
+    margin-bottom: 10px;
+  }
+
+  nav ul li a {
+    text-decoration: none;
+    color: #3c869d;
+    font-weight: bold;
+  }
+
+  article {
+    float: left;
+    padding: 20px;
+    width: 70%;
+    background-color: #61deff;
+    min-height: 350px; 
+  }
+
+  .imagen-descripcion {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+
+  section::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  footer {
+    background-color: #3c869d;
+    padding: 15px;
+    text-align: center;
+    color: white;
+    clear: both;
+  }
+
+  @media (max-width: 600px) {
+    nav, article {
+      width: 100%;
+      height: auto;
+    }
+    .header-content {
+      flex-direction: column; 
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <img src="dentista.png" alt="Logo de Dentista Six Seven" class="dentista-header">
+    <h2>Dentista Six Seven</h2>    
+  </div>
+</header>
+
+<section>
+  <nav>
+    <ul>
+      <li><a href="file:///E:/Oscar%20Perez%204%C2%B0I/Pacientes.html">Pacientes</a></li>
+      <li><a href="file:///E:/Oscar%20Perez%204%C2%B0I/Citas.html">Citas</a></li>
+      <li><a href="file:///E:/Oscar%20Perez%204%C2%B0I/Doctores.html">Doctores</a></li>
+      <li><a href="file:///E:/Oscar%20Perez%204%C2%B0I/Tratamientos.html">Tratamientos</a></li>
+      <li><a href="file:///E:/Oscar%20Perez%204%C2%B0I/Insumos.html">Insumos</a></li>
+    </ul>
+  </nav>
+  
+  <article>
+    <h1>Dentista Six Seven: Arte en cada diente.</h1>
+    <p>La Excelencia no es un Accidente, es el Resultado de la Innovación. En un mundo dental que evoluciona cada segundo, en Dentista Six Seven nos hemos consolidado como el aliado estratégico que todo odontólogo necesita. Entendemos que detrás de cada modelo de yeso o archivo STL, hay un paciente esperando recuperar su seguridad y bienestar.</p>
+    
+    <img src="consultorio.png" alt="Consultorio dentista" class="consultorio-descripcion">
+    
+  </article>
+</section>
+
+<footer>
+  <p>Oscar Jahir Perez Munoz, 24308051280611, 4*I, Programacion</p>
+</footer>
+
+</body>
+</html>
