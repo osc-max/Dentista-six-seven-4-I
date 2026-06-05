@@ -2,153 +2,193 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Citas Médicas - Clínica Dental</title>
+    <title>Citas Médicas</title>
     <style>
-        body {
-            font-family: sans-serif;
-            background-color: #f0f2f5;
-            padding: 20px;
-        }
-        .container {
-            max-width: 1100px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-        th, td {
-            padding: 12px;
-            text-align: left;
-            border-bottom: 1px solid #eee;
-        }
-        th {
-            background-color: #2ecc71;
-            color: white;
-        }
-        tr:hover {
-            background-color: #f9f9f9;
-        }
-        .status {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: bold;
-        }
+        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: #2c3e50; }
+        h2 { color: #2ecc71; }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; margin-bottom: 4px; font-weight: bold; }
+        .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { background-color: #2ecc71; color: white; padding: 10px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #27ae60; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; font-size: 13px; }
+        th { background-color: #2ecc71; color: white; }
+        tr:hover { background-color: #f9f9f9; }
+        .status { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; }
         .completada { background: #d4edda; color: #155724; }
         .cancelada { background: #f8d7da; color: #721c24; }
         .programada { background: #fff3cd; color: #856404; }
         .re-programada { background: #d1ecf1; color: #0c5460; }
+        .btn-eliminar { background: #e74c3c; padding: 5px 10px; font-size: 12px; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        .btn-eliminar:hover { background: #c0392b; }
+        .btn-editar { background: #f39c12; padding: 5px 10px; font-size: 12px; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        .btn-editar:hover { background: #e67e22; }
+        .btn-guardar { background: #27ae60; padding: 5px 10px; font-size: 12px; color: white; border: none; border-radius: 4px; cursor: pointer; margin-right: 5px; }
+        .btn-cancelar { background: #95a5a6; padding: 5px 10px; font-size: 12px; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        td input, td select { width: 100%; padding: 4px; border: 1px solid #2ecc71; border-radius: 4px; box-sizing: border-box; font-size: 13px; }
+        #adminPanel { background: #fff8e1; border: 1px solid #ffc107; border-radius: 8px; padding: 15px; margin-bottom: 20px; }
+        #adminPanel input[type="password"] { width: 200px; padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px; }
+        .btn-admin { background: #f39c12; font-size: 14px; padding: 8px 16px; }
+        .btn-cerrar { background: #95a5a6; font-size: 14px; padding: 8px 16px; }
+        .admin-badge { background: #27ae60; color: white; padding: 4px 10px; border-radius: 4px; font-size: 13px; margin-left: 10px; }
+        .admin-only { display: none; }
     </style>
 </head>
 <body>
-
 <div class="container">
-    <h1>Registro de Citas</h1>
+    <h1>Registro de Citas <span id="adminBadge" class="admin-badge" style="display:none;">🔑 Administrador</span></h1>
+
+    <div id="adminPanel">
+        <strong>🔒 Acceso Administrador</strong><br><br>
+        <div id="loginForm">
+            <input type="password" id="claveAdmin" placeholder="Contraseña de admin">
+            <button class="btn-admin" onclick="loginAdmin()">Entrar</button>
+        </div>
+        <div id="logoutForm" style="display:none;">
+            <button class="btn-cerrar" onclick="logoutAdmin()">Cerrar sesión admin</button>
+        </div>
+    </div>
+
+    <div id="formSection" class="admin-only">
+        <h2>Agendar Cita</h2>
+        <div class="form-group"><label>Paciente:</label><input type="text" id="paciente" placeholder="Nombre del paciente"></div>
+        <div class="form-group"><label>Doctor:</label><input type="text" id="doctor" placeholder="Nombre del doctor"></div>
+        <div class="form-group"><label>Fecha y Hora:</label><input type="datetime-local" id="fecha_hora"></div>
+        <div class="form-group"><label>Motivo:</label><input type="text" id="motivo" placeholder="Ej: Limpieza, Extracción"></div>
+        <div class="form-group">
+            <label>Estado:</label>
+            <select id="estado">
+                <option value="programada">Programada</option>
+                <option value="completada">Completada</option>
+                <option value="cancelada">Cancelada</option>
+                <option value="re-programada">Re-programada</option>
+            </select>
+        </div>
+        <button onclick="agregarCita()">Guardar Cita</button>
+    </div>
+
     <table>
         <thead>
             <tr>
-                <th>ID Cita</th>
-                <th>Paciente</th>
-                <th>Doctor</th>
-                <th>Fecha / Hora</th>
-                <th>Motivo</th>
-                <th>Estado</th>
+                <th>Paciente</th><th>Doctor</th><th>Fecha / Hora</th><th>Motivo</th><th>Estado</th>
+                <th class="admin-only" id="colAccion">Acción</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>CITA-101</td>
-                <td>Juan Pérez García</td>
-                <td>Dr. Arrieta</td>
-                <td>15/Marzo - 10:00 AM</td>
-                <td>Extracción de muela</td>
-                <td><span class="status completada">Completada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-102</td>
-                <td>María Elena Rodríguez</td>
-                <td>Dra. Sánchez</td>
-                <td>15/Marzo - 11:30 AM</td>
-                <td>Limpieza rutina</td>
-                <td><span class="status completada">Completada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-103</td>
-                <td>Carlos Slim Helú Jr.</td>
-                <td>Dra. Sánchez</td>
-                <td>16/Marzo - 09:00 AM</td>
-                <td>Revisión sensibilidad</td>
-                <td><span class="status cancelada">Cancelada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-104</td>
-                <td>Ana Karenina Silva</td>
-                <td>Dr. Arrieta</td>
-                <td>16/Marzo - 04:00 PM</td>
-                <td>Aplicación de resina</td>
-                <td><span class="status programada">Programada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-105</td>
-                <td>Roberto Gómez Bolaños</td>
-                <td>Dra. Luna</td>
-                <td>17/Marzo - 12:00 PM</td>
-                <td>Ajuste de brackets</td>
-                <td><span class="status programada">Programada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-106</td>
-                <td>Laura Pausini Cantú</td>
-                <td>Dra. Sánchez</td>
-                <td>17/Marzo - 05:00 PM</td>
-                <td>Blanqueamiento</td>
-                <td><span class="status programada">Programada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-107</td>
-                <td>Diego Armando Maradona</td>
-                <td>Dr. Arrieta</td>
-                <td>18/Marzo - 08:00 AM</td>
-                <td>Urgencia dolor</td>
-                <td><span class="status completada">Completada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-108</td>
-                <td>Sofía Vergara Ortiz</td>
-                <td>Dra. Luna</td>
-                <td>19/Marzo - 11:00 AM</td>
-                <td>Consulta inicial</td>
-                <td><span class="status programada">Programada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-109</td>
-                <td>Luis Miguel Gallego</td>
-                <td>Dra. Sánchez</td>
-                <td>20/Marzo - 10:00 AM</td>
-                <td>Diseño de sonrisa</td>
-                <td><span class="status re-programada">Re-programada</span></td>
-            </tr>
-            <tr>
-                <td>CITA-110</td>
-                <td>Ximena Sariñana</td>
-                <td>Dra. Sánchez</td>
-                <td>21/Marzo - 01:00 PM</td>
-                <td>Limpieza y flúor</td>
-                <td><span class="status programada">Programada</span></td>
-            </tr>
-        </tbody>
+        <tbody id="tablaCitas"></tbody>
     </table>
 </div>
 
+<script>
+    const CLAVE_ADMIN = "admin123";
+    let esAdmin = false;
+
+    window.onload = cargarCitas;
+
+    function loginAdmin() {
+        if (document.getElementById("claveAdmin").value === CLAVE_ADMIN) {
+            esAdmin = true;
+            document.querySelectorAll(".admin-only").forEach(el => el.style.display = "block");
+            document.getElementById("colAccion").style.display = "table-cell";
+            document.getElementById("adminBadge").style.display = "inline";
+            document.getElementById("loginForm").style.display = "none";
+            document.getElementById("logoutForm").style.display = "block";
+            cargarCitas();
+        } else { alert("Contraseña incorrecta"); }
+    }
+
+    function logoutAdmin() {
+        esAdmin = false;
+        document.querySelectorAll(".admin-only").forEach(el => el.style.display = "none");
+        document.getElementById("adminBadge").style.display = "none";
+        document.getElementById("loginForm").style.display = "block";
+        document.getElementById("logoutForm").style.display = "none";
+        document.getElementById("claveAdmin").value = "";
+        cargarCitas();
+    }
+
+    async function cargarCitas() {
+        const res = await fetch("/api/citas");
+        const citas = await res.json();
+        const tbody = document.getElementById("tablaCitas");
+        tbody.innerHTML = "";
+        citas.forEach(c => {
+            tbody.innerHTML += `
+                <tr id="fila-${c._id}">
+                    <td id="paciente-${c._id}">${c.paciente}</td>
+                    <td id="doctor-${c._id}">${c.doctor}</td>
+                    <td id="fecha-${c._id}">${c.fecha_hora}</td>
+                    <td id="motivo-${c._id}">${c.motivo}</td>
+                    <td id="estado-${c._id}"><span class="status ${c.estado}">${c.estado}</span></td>
+                    ${esAdmin ? `
+                    <td>
+                        <button class="btn-editar" onclick="editarFila('${c._id}','${c.paciente}','${c.doctor}','${c.fecha_hora}','${c.motivo}','${c.estado}')">Editar</button>
+                        <button class="btn-eliminar" onclick="eliminar('${c._id}')">Eliminar</button>
+                    </td>` : ""}
+                </tr>`;
+        });
+    }
+
+    function editarFila(id, paciente, doctor, fecha, motivo, estado) {
+        document.getElementById(`paciente-${id}`).innerHTML = `<input type="text" value="${paciente}">`;
+        document.getElementById(`doctor-${id}`).innerHTML   = `<input type="text" value="${doctor}">`;
+        document.getElementById(`fecha-${id}`).innerHTML    = `<input type="datetime-local" value="${fecha}">`;
+        document.getElementById(`motivo-${id}`).innerHTML   = `<input type="text" value="${motivo}">`;
+        document.getElementById(`estado-${id}`).innerHTML   = `
+            <select>
+                <option value="programada"   ${estado==="programada"    ? "selected":""}>Programada</option>
+                <option value="completada"   ${estado==="completada"    ? "selected":""}>Completada</option>
+                <option value="cancelada"    ${estado==="cancelada"     ? "selected":""}>Cancelada</option>
+                <option value="re-programada"${estado==="re-programada" ? "selected":""}>Re-programada</option>
+            </select>`;
+        document.querySelector(`#fila-${id} td:last-child`).innerHTML = `
+            <button class="btn-guardar" onclick="guardarEdicion('${id}')">Guardar</button>
+            <button class="btn-cancelar" onclick="cargarCitas()">Cancelar</button>`;
+    }
+
+    async function guardarEdicion(id) {
+        const datos = {
+            paciente:  document.querySelector(`#paciente-${id} input`).value,
+            doctor:    document.querySelector(`#doctor-${id} input`).value,
+            fecha_hora: document.querySelector(`#fecha-${id} input`).value,
+            motivo:    document.querySelector(`#motivo-${id} input`).value,
+            estado:    document.querySelector(`#estado-${id} select`).value
+        };
+        await fetch(`/api/citas/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+        });
+        await cargarCitas();
+    }
+
+    async function agregarCita() {
+        if (!esAdmin) return;
+        const campos = ["paciente","doctor","fecha_hora","motivo"];
+        const datos = {};
+        for (let c of campos) {
+            datos[c] = document.getElementById(c).value;
+            if (!datos[c]) { alert("Completa todos los campos"); return; }
+        }
+        datos.estado = document.getElementById("estado").value;
+        const res = await fetch("/api/citas", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+        });
+        const json = await res.json();
+        alert(json.mensaje);
+        campos.forEach(c => document.getElementById(c).value = "");
+        await cargarCitas();
+    }
+
+    async function eliminar(id) {
+        if (!confirm("¿Eliminar esta cita?")) return;
+        await fetch(`/api/citas/${id}`, { method: "DELETE" });
+        await cargarCitas();
+    }
+</script>
 </body>
 </html>
